@@ -1,0 +1,56 @@
+---
+title: "kableExtra Practice"
+author: "Carmen"
+date: "2024-08-23"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+execute:
+  echo: false
+  warning: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(kableExtra)
+library(datapasta)
+```
+
+```{r}
+whale_sightings <- data.table::data.table(
+        date = c("8/12/2014","8/13/2014","8/15/2014",
+                 "8/16/2014","8/16/2014"),
+        site = c("channel", "channel", "harbor", "channel", "channel"),
+         spp = c("unknown", "gray", "gray", "humpback", "gray"),
+      dist_m = c(400L, 200L, 60L, 300L, 150L),
+    behavior = c("breach", "spout", "spout", "feeding", "feeding")
+)
+```
+
+## Practice making nice tables:
+
+```{r}
+# Bootstrap theme
+whale_sightings %>%
+  kable(col.names = c("Date", "Site", "Species", "Distance (m)", "Behavior")) %>%
+  kable_styling(full_width = FALSE, bootstrap_options = "striped")
+```
+
+```{r}
+# Paper theme
+whale_sightings %>%
+  kable() %>%
+  kable_classic()
+```
+
+```{r}
+whale_sightings %>%
+  kable(col.names = c("Date", "Site", "Species", "Distance (m)", "Behavior")) %>%
+  kable_classic() %>%
+  column_spec(1, bold = TRUE, background = "yellow") %>%
+  column_spec(2, italic = TRUE, background = "orange") %>%
+  add_header_above(c(" " = 1, "One header" = 2, "Another header" = 2)) %>%
+  scroll_box(height = "100px", width = "500px")
+```
+
